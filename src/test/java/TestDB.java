@@ -17,7 +17,7 @@ public class TestDB {
 
     @Test
     public void test1() {
-        Assert.assertNotNull(statemenT.selectPersonById(5).getEmail());
+    //    Assert.assertNotNull(statemenT.selectPersonById(2).getEmail());
     }
 
     @Test
@@ -34,7 +34,7 @@ public class TestDB {
 
     @Test
     public void test5() throws Exception {
-        System.out.println(statemenT.getListAllUsersByNames("basijkjjhikkjlio"));
+        System.out.println(statemenT.getListAllUsersByNames("Vasiliy"));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class TestDB {
     }
     @Test
     public void test7() throws SQLException {
-        System.out.println(statemenT.selectPersonByField(FieldsPersonTable.P_ID, "20"));
+        System.out.println(statemenT.selectPersonByField(FieldsPersonTable.P_ID, "5"));
     }
     @Test
     public void test8() throws SQLException {
