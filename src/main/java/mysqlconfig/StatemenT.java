@@ -2,6 +2,7 @@ package mysqlconfig;
 
 
 import data.Person;
+import enums.FieldsPersonTable;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -42,19 +43,26 @@ public class StatemenT {
         }
         return p;
     }
-    public Person selectPersonByName(String name) {
+    public Person selectPersonByName(String name) throws SQLException {
         String s = "SELECT * FROM sys.person where personName='" + name + "'";
         Person p = null;
-        try {
+
             ResultSet result = statement.executeQuery(s);
             result.next();
             p = new Person(result);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         return p;
     }
+    public Person selectPersonByField(FieldsPersonTable filed,String value) throws SQLException {
+        String s = "SELECT * FROM sys.person where "+filed.getFiels()+"='" + value + "'";
+        Person p = null;
 
+            ResultSet result = statement.executeQuery(s);
+            result.next();
+            p = new Person(result);
+
+        return p;
+    }
     public List<Person> getListAllUsers() {
         String select = "SELECT * FROM sys.person limit 0,100";
         ResultSet result = null;
@@ -70,23 +78,29 @@ public class StatemenT {
         return personList;
     }
 
-    public List<Person> getListAllUsersByNames(String name) {
+    public List<Person> getListAllUsersByNames(String name) throws Exception {
         String select = "SELECT * FROM sys.person where personName='"+name+"' limit 0,100";
         ResultSet result = null;
         List<Person> personList = new ArrayList<>();
-        try {
+
             result = statement.executeQuery(select);
             while (result.next()) {
                 personList.add(new Person(result));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        if(personList.size()==0) throw new Exception("Personlist empty");
         return personList;
     }
 
-    public boolean insertPersonByNameAndPass(Person basilio) {
-        String insert="INSERT INTO `sys`.`person` (`personName`, `pass`) VALUES ('"+basilio.getName()+"', '"+basilio.getPass()+"');";
+
+
+
+    public boolean insertPerson(Person basilio) {
+        String insert;
+        if(basilio.getName()==null){
+        insert="INSERT INTO `sys`.`person` (`personName`, `pass`) VALUES ('"+basilio.getName()+"', '"+basilio.getPass()+"');";}
+        else{
+            insert="INSERT INTO `sys`.`person` (`personName`, `email`, `pass`) VALUES ('"+basilio.getName()+"', '"+basilio.getEmail()+"', '"+basilio.getPass()+"');";
+        }
         boolean b = true;
         try {
            b= statement.execute(insert);
@@ -94,6 +108,11 @@ public class StatemenT {
             e.printStackTrace();
         }
         return b;
+    }
+
+        public boolean deletePersonById(int id) throws SQLException {
+        String delete="DELETE FROM `sys`.`person` WHERE (`p_id` = '"+id+"');";
+        return statement.execute(delete);
     }
 
     //

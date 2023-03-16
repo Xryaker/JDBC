@@ -28,16 +28,13 @@ public class Person {
         return id;
     }
 
-    public Person(ResultSet resultSet) {
-        try {
-            name = resultSet.getString("personName");
+    public Person(ResultSet resultSet) throws SQLException {
 
+            name = resultSet.getString("personName");
             email = resultSet.getString("email");
             pass = resultSet.getString("pass");
             id = resultSet.getInt("p_id");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override

@@ -1,4 +1,5 @@
 import data.Person;
+import enums.FieldsPersonTable;
 import mysqlconfig.StatemenT;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -28,16 +29,26 @@ public class TestDB {
 
     @Test
     public void test2() {
-        System.out.println(statemenT.insertPersonByNameAndPass(new Person("basilio", "5665965")));
+     //  statemenT.insertPerson(new Person("basilio", "5665965"));
     }
 
     @Test
-    public void test5() {
-        System.out.println(statemenT.getListAllUsersByNames("basilio"));
+    public void test5() throws Exception {
+        System.out.println(statemenT.getListAllUsersByNames("basijkjjhikkjlio"));
     }
 
     @Test
-    public void test6() {
-        System.out.println(statemenT.selectPersonByName("basilio"));
+    public void test6() throws SQLException {
+
+        statemenT.selectPersonByName("Vasiliy");
+
+    }
+    @Test
+    public void test7() throws SQLException {
+        System.out.println(statemenT.selectPersonByField(FieldsPersonTable.P_ID, "20"));
+    }
+    @Test
+    public void test8() throws SQLException {
+        System.out.println(statemenT.deletePersonById(1));
     }
 }
